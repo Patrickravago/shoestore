@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pips Kicks</title>
+	<!-- Add jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="YOUR_INTEGRITY_HERE" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-H+4aTJ9Q9rlGTJmrHP8JW9L1Sm4kY8w3bQvfv2BBt8E=" crossorigin="anonymous"></script>
+
+
+    <style>
+        body {
+		 font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url('https://images.footlocker.com/content/dam/final/footlocker/site/homepage/2024/february/240226-fl-spring-essentials-1up.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 50vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+		.logo {
+    width: 80px; /* Set the desired width for your logo */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Adjust margin as needed */
+}
+
+
+        h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s; /* Added color transition */
+}
+
+.navbar-link:hover {
+    background-color: black;
+    color: yellow; /* Change the color to your desired hover color */
+}
+
+.cart-icon {
+            font-size: 20px;
+            margin-left: auto;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+       
+
+        .active-section {
+            background-color: #555;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+          .search-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Center icon and text vertically */
+        }
+
+        .search-button i {
+            margin-right: 5px; /* Adjust spacing between icon and text */
+        }
+        .search-button:hover {
+            background-color: #555;
+        }
+
+        .size-dropdown {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .size-dropdown select {
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .home-button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .home-button:hover {
+            background-color: #555;
+        }
+
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            flex-grow: 1;
+            display: none;
+        }
+
+        .shoe-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shoe-card.hide {
+            display: none;
+        }
+
+        .shoe-card:hover {
+            transform: scale(1.05);
+        }
+
+        .shoe-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+       footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .add-to-cart-btn,
+        .quick-view-btn,
+        .back-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-to-cart-btn:hover,
+        .quick-view-btn:hover,
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        /* Add styles for the Quick View modal */
+        #quickViewModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #quickViewContent {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        #quickViewClose {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid grey;
+            border-radius: 4px;
+            color: grey;
+            background-color: #fff;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #quickViewClose:hover {
+            background-color: #ddd;
+			}
+    </style>
+</head>
+
+<body>
+
+    <header>
+	<img src="https://www.finanzaonline.com/app/uploads/2017/03/foot-locker-conti-trimestrali-sopra-le-stime-85-nel-pre-mercato-image.jpeg" alt="Your Logo" class="logo">
+        <h1>Pips Kicks</h1>
+        <nav>
+            <a href="#" class="navbar-link" onclick="goHome()">Home</a>
+            <a href="#" class="navbar-link" onclick="showSection('menSection')">Men's</a>
+            <a href="#" class="navbar-link" onclick="showSection('womenSection')">Women's</a>
+            <a href="#" class="navbar-link" onclick="showSection('kidsSection')">Kids'</a>
+			<a href="#" class="navbar-link" onclick="showSection('newArrivalsSection')">New Arrivals</a> <!-- New Arrivals Button -->
+            <div class="search-container">
+                  <input type="text" class="search-input" placeholder="Search..." id="searchInput">
+            <button class="search-button" onclick="searchShoe()">
+                <i class="fas fa-search"></i>
+                Search
+            
+            </div>
+			 <div class="cart-icon" onclick="openCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cartItemCount">0</span>
+	</div>
+	
+        </nav>
+    </header>
+
+    <!-- Men's Section -->
+    <section id="menSection" class="shoe-section">
+        <!-- Men's shoe cards will be dynamically added here -->
+    </section>
+
+    <!-- Women's Section -->
+    <section id="womenSection" class="shoe-section">
+        <!-- Women's shoe cards will be dynamically added here -->
+    </section>
+
+    <!-- Kid's Section -->
+    <section id="kidsSection" class="shoe-section">
+        <!-- Kids' shoe cards will be dynamically added here -->
+    </section>
+	
+	  <!-- New Arrivals Section -->
+    <section id="newArrivalsSection" class="shoe-section">
+        <!-- New Arrivals shoe cards will be dynamically added here -->
+    </section>
+
+
+    <footer>
+        <p>&copy; 2024 pipskicksmanila</p>
+        <p>pipskicksmanila@gmail.com</p>
+        <p>111-1111</p>
+    </footer>
+
+    <div id="quickViewModal">
+        <div id="quickViewContent">
+            <span id="quickViewClose" onclick="closeQuickViewModal()">Close &times;</span>
+            <h2 id="quickViewTitle"></h2>
+            <img id="quickViewImage" alt="Quick View Image">
+        </div>
+    </div>
+
+    <script>
+        // Sample data for 9 shoe cards for each section
+        const menShoes = [
+            { id: 1, name: "Adidas Samba", description: "Born on the soccer field, the adidas Originals Samba is a timeless icon of street style. These shoes stay true to their legacy with a soft leather upper and suede overlays.", price: 100.00, image: "https://images.footlocker.com/is/image/EBFL2/B75806_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 2, name: "Nike P-6000", description: "Designers looked to the Nike Pegasus 25 and 2006 for inspiration to create the Nike Women’s P-6000 shoe. The result? A sneaker that’s as striking in appearance as it is in performance.", price: 110.00, image: "https://images.footlocker.com/is/image/EBFL2/D6404006_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 3, name: "Asics GT 2160", description: "Eliminate discomfort and hit your stride perfectly in the ASICS GT-2160. Engineered for uninterrupted performance, these shoes are packed with Dual GEL technology. ", price: 120.00, image: "https://images.footlocker.com/is/image/EBFL2/3A320020_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 4, name: "Nike Air Force 1", description: "Let the radiance lives on in the Nike Air Force 1 '07 LE. Putting a fresh spin on B-ball silhouettes, these OG shoes perfect the things you know best.", price: 115.00, image: "https://images.footlocker.com/is/image/EBFL2/W2288111_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 5, name: "New Balance 530", description: "Where heritage meets performance. New Balance's rich heritage in sports takes a fresh new step in the New Balance 530. With hints of retro flair.", price: 100.00, image: "https://images.footlocker.com/is/image/EBFL2/MR530SG_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 6, name: "Jordan 1 Low", description: "Let your style shine as brightly as your performance in the Jordan Air Jordan 1 Low. Inspired by the ‘85 original silhouettes.", price: 115.00, image: "https://images.footlocker.com/is/image/EBFL2/53558161_a1?wid=504&hei=504&fmt=png-alpha" },
+        ];
+
+        const womenShoes = [
+            { id: 1, name: "NMD_R1 V3 Shoes", description: "The NMD design dropped in 2015 and took over city streets all around the world. These adidas NMD_R1 V3 shoes evolve the same idea, playing with transparency. You know those signature midsole plugs that you love? On this pair.", price: 69.99, image: "https://images.footlocker.com/is/image/EBFL2/GX8312_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 2, name: "Ubounce DNA Shoes", description: "When you want to set the pace for city adventures or casual hangouts, lace up the UBounce DNA shoes from adidas. A knit upper moulds to your foot like a sock, while the TPU cage offers structure and the iconic. ", price: 89.99, image: "https://images.footlocker.com/is/image/EBFL2/IG6027_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 3, name: "Gazelle Shoes", description: "Bringing back an archive edition of the celebrated Gazelle, the sneakers show off the same textures and materials as the 1991 version. Made in suede, they feature contrast details that echo the early '90s style.	", price: 79.99, image: "https://images.footlocker.com/is/image/EBFL2/B41645_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 4, name: "Nike Air Force 1 Shadow", description: "Everything you love about the AF-1—but doubled! The Air Force 1 Shadow puts a playful twist on a hoops icon to highlight the best of AF-1 DNA. With 2 eyestays, 2 mudguards, 2 backtabs and 2 Swoosh logos, you get a layered look with double the branding.", price: 99.99, image: "https://images.footlocker.com/is/image/EBFL2/D1847104_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 5, name: "Nike Air Max SC", description: "With its familiar design lines, heritage athletics aesthetic and visible Max Air cushioning, the Nike Air Max SC is the perfect way to finish off any outfit. Smooth leather and lightweight knit textiles add depth and durability while pops of colour and a tinted Air unit in the heel.", price: 99.99, image: "https://images.footlocker.com/is/image/EBFL2/CW554101_01?wid=504&hei=504&fmt=png-alpha" },
+            { id: 6, name: "Air Jordan 4", description: "Poised and sophisticated—the AJ4 'White & Gold' shines a light on your footwear game. Luxe materials are combined with a softened, tonal palette of Sail and Light Bone hues, while flashy hits of Metallic Gold add a touch of shimmer to your look. It nods back to the original with signature details like embossed Jumpman branding on the tongue.", price: 99.99, image: "https://static.nike.com/a/images/t_prod_ss/w_640,c_limit,f_auto/37aaffe3-9d01-451a-bb0a-1ca0354b44cc/women-s-air-jordan-4-white-gold-aq9129-170-release-date.jpg" },
+        ];
+
+        const kidsShoes = [
+            { id: 1, name: "AE 1 LOW SHOES KIDS", description: "Lace up in the style of one of the game's emerging superstars. These juniors' signature sneakers from adidas Basketball and Anthony Edwards are built for certified bucket getters. The combined BOOST and Lightstrike midsole is ultra-lightweight and adds outstanding energy return to your most explosive moves. A rubber outsole provides all the support you need.", price: 49.99, image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/86a91d8a2b414cd4afbccb58fbc87bdc_9366/AE_1_Low_Shoes_Kids_White_IF1875_01_standard.jpg" },
+            { id: 2, name: "ALTAVENTURE SPORT SWIM SANDALS", description: "Your little one is officially cleared for splashing around. Strap their feet into these adidas swim sandals to give them lasting support for a comfortable day of water adventures. The EVA footbed provides soft cushioning for extra comfort in and out of the water. The grippy rubber outsole extends up over the toe for extra protection.", price: 59.99, image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/856befbe072a4ab088c5ad6600b20134_9366/Altaventure_Sport_Swim_Sandals_Black_GV7812_01_standard.jpg" },
+            { id: 3, name: "ADIDAS GRAND COURT X DISNEY GROGU SHOES KIDS", description: "Comfort and cuteness — this is the way. Help them bring balance to the Force in these infants' adidas shoes inspired by Star Wars™. A Grogu colourway and graphic on the tongue bring the perfect look for your tiny Star Wars fan. Hook-and-loop straps make it a breeze.", price: 39.99, image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/14a36631814b4bf780672b86d2d5301c_9366/adidas_Grand_Court_x_Disney_Grogu_Shoes_Kids_Green_IG0450_01_standard.jpg" },
+            { id: 4, name: "TENSAUR HOOK AND LOOP SHOES", description: "When you're small, every surface needs to be explored — from the fluffy carpet to the flower beds. These infants' sturdy adidas shoes have easy hook-and-loop straps to keep them in place.", price: 99.99, image: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/53c6c292516e465d929caf46013ee304_9366/Tensaur_Hook_and_Loop_Shoes_White_H06301_01_standard.jpg" },
+            { id: 5, name: "Caven Love Shoes Kids", description: "These kids’ sneakers are part of the PUMA Caven range – a collection inspired by classic basketball styles of the 1980s. This history can be seen in the sporty silhouette, lace detail and toe perforations.", price: 99.99, image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_750,h_750/global/389733/02/sv03/fnd/PHL/fmt/png/Caven-Love-Shoes-Kids" },
+            { id: 6, name: "Aquacat Shield Fruits Babies' Sandals", description: "Let your little one splash on in the stunning looks and proven protection of this season's Aquacat Sandals. Our Aquacat Shield Fruits Sandals are a charming update to a must-have style.", price: 99.99, image: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_750,h_750/global/383769/02/sv03/fnd/PHL/fmt/png/Aquacat-Shield-Fruits-Babies'-Sandals" },
+        ];
+		
+		const newArrivalsShoes = [
+            { id: 1, name: "Jordan Retro 4", description: "MJ's iconic shoe from 1989 is reinvented for modern wear!", price: 100.00, image: "https://images.footlocker.com/is/image/EBFL2/Q7669006_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 2, name: "Jordan Retro 13", description: "The Air Jordan 13 was inspired by MJ's cat-like reflexes on the court, so the shoe features a sole modeled after a panther's paw and a hologram on the ankle that looks like a cat's eye. ", price: 200.00, image: "https://images.footlocker.com/is/image/EBFL2/14571160_a1?wid=504&hei=504&fmt=png-alpha" },
+            { id: 3, name: "Jordan Retro 1 Hi OG RMSTD", description: "No one can compete with a classic, and one such example is the Jordan Retro 1 Hi OG RMSTD.", price: 180.00, image: "https://images.footlocker.com/is/image/EBFL2/Z5485010_01?wid=504&hei=504&fmt=png-alpha" },
+            { id: 4, name: "Adidas AE 1 The Future", description: "The future is here. His name—Anthony Edwards. His shoe—the adidas AE 1. “The Future” colorway showcases the cutting-edge technology with a look that’s before its time.", price: 120.00, image: "https://images.footlocker.com/is/image/EBFL2/IF1858_01?wid=504&hei=504&fmt=png-alpha" },
+            { id: 5, name: "Jordan Retro 12", description: "If you’re looking for a top-quality kick for your kid, look no further than the Jordan Retro 12. This sneaker is comfortable, cool, and inspired by the shoe Michael Jordan wore when he won his fifth league title. ", price: 150.00, image: "https://images.footlocker.com/is/image/EBFL2/53265130_01?wid=504&hei=504&fmt=png-alpha" },
+            { id: 6, name: "Jordan Spizike Low", description: "Legendary style and iconic comfort! Fly high and reach the sky by sporting the Jordan Spizike Low. Drawing elements from four iconic Jordans, these sneakers are sure to make heads turn everywhere you go.", price: 160.00, image: "https://images.footlocker.com/is/image/EBFL2/Q1759100_01?wid=504&hei=504&fmt=png-alpha" },
+        ];
+
+
+        function createShoeCard(sectionId, shoe) {
+            const shoeCard = document.createElement("div");
+            shoeCard.classList.add("shoe-card");
+document.getElementById(sectionId).appendChild(shoeCard);
+
+            shoeCard.innerHTML = `
+                <img src="${shoe.image}" alt="${shoe.name}" class="shoe-image">
+                <h2>${shoe.name}</h2>
+                <p>${shoe.description}</p>
+                <p>$${shoe.price.toFixed(2)}</p>
+                <div class="size-dropdown">
+                    <label for="sizeSelect${shoe.id}">Sizes:</label>
+                    <select id="sizeSelect${shoe.id}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                    </select>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart(${shoe.id})">Add to Cart</button>
+                <button class="quick-view-btn" onclick="openQuickViewModal(${shoe.id})">Quick View</button>
+                <button class="back-button" onclick="goBack()">Back</button>
+            `;
+
+            document.getElementById(sectionId).appendChild(shoeCard);
+        }
+
+        function openQuickViewModal(shoeId) {
+            const shoe = getShoeById(shoeId);
+            document.getElementById("quickViewTitle").innerText = shoe.name;
+            document.getElementById("quickViewImage").src = shoe.image;
+            document.getElementById("quickViewModal").style.display = "flex";
+        }
+
+        function closeQuickViewModal() {
+            document.getElementById("quickViewModal").style.display = "none";
+        }
+
+        function getShoeById(shoeId) {
+            const allShoes = [...menShoes, ...womenShoes, ...kidsShoes];
+            return allShoes.find(shoe => shoe.id === shoeId);
+        }
+
+        function searchShoe() {
+        const searchInput = $("#searchInput").val().toLowerCase();
+        const shoeCards = $(".shoe-card");
+
+        shoeCards.each(function () {
+            const shoeName = $(this).find("h2").text().toLowerCase();
+            const sectionId = $(this).closest(".shoe-section").attr("id");
+
+            if (shoeName.includes(searchInput) || searchInput === '') {
+                $(this).removeClass("hide");
+                $(`#${sectionId}`).css("display", "flex");
+                $(this).get(0).scrollIntoView({ behavior: "smooth" });
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+		
+    
+}
+ 
+
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            goBack();
+        }
+
+        function goBack() {
+            const shoeCards = document.querySelectorAll(".shoe-card");
+            shoeCards.forEach(card => card.classList.remove("hide"));
+        }
+
+        function showSection(sectionId) {
+    const sections = document.querySelectorAll('.shoe-section');
+    sections.forEach(section => {
+        if (section.id === sectionId) {
+            section.style.display = 'flex';
+        } else {
+            section.style.display = 'none';
+        }
+    });
+}
+
+        function addToCart(shoeId) {
+            const selectedSize = document.getElementById(`sizeSelect${shoeId}`).value;
+            const shoe = getShoeById(shoeId);
+            alert(`Added ${shoe.name} (Size ${selectedSize}) to the cart!`);
+        }
+
+        function goHome() {
+            // You can customize this function to redirect to the home page
+            alert("Redirecting to the home page!");
+        }
+		 let cart = [];
+
+        function openCart() {
+            // Add your logic to display the cart here
+            alert("Open shopping cart!");
+        }
+
+        function updateCartBadge() {
+            const cartItemCount = document.getElementById('cartItemCount');
+            if (cartItemCount) {
+                cartItemCount.textContent = cart.length;
+            }
+        }
+
+       function addToCart(shoeId) {
+    const selectedSize = $(`#sizeSelect${shoeId}`).val();
+    const shoe = getShoeById(shoeId);
+
+    // Add the selected item to the cart
+    cart.push({ shoeId, size: selectedSize });
+
+    // Update the cart badge
+    updateCartBadge();
+
+    alert(`Added ${shoe.name} (Size ${selectedSize}) to the cart!`);
+}
+
+
+
+        // Populate shoe cards dynamically
+        menShoes.forEach((shoe) => createShoeCard("menSection", shoe));
+        womenShoes.forEach((shoe) => createShoeCard("womenSection", shoe));
+        kidsShoes.forEach((shoe) => createShoeCard("kidsSection", shoe));
+		 newArrivalsShoes.forEach((shoe) => createShoeCard("newArrivalsSection", shoe));
+    </script>
+</body>
+
+</html>
